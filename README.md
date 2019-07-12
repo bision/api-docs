@@ -28,3 +28,5 @@ WebSocket是HTML5一种新的协议Protocol。它实现了客户端与服务器�
 >币兴API中文Telegram群 https://t.me/bision
 
 >币兴API英文Telegram群 https://t.me/bision
+
+>QQ: 888888
