@@ -59,13 +59,13 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 
 ### 返回格式
 
-所有的接口返回都是JSON格式。交易 API 返回信息均包含Code与Message两个信息。
+所有的接口返回都是JSON格式。
 
 
 <br/>
 
 
-### 行情数量
+### 行情数据
 
 **K线数据**
 
@@ -240,4 +240,295 @@ market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
     156292405956104
   ]
 ]
+```
+
+<br/>
+<br/>
+
+### 交易 API
+
+**获取账户资产**
+
+``
+    GET /trade/api/v1/getBalance
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": {
+    "btc": {
+      "freeze": "0.00",     // 冻结
+      "available": "0.00"   // 可用
+    },
+    "eth": {
+      "freeze": "0.00",
+      "available": "0.00"
+    },
+    "usdt": {
+      "freeze": "3062.17437341",
+      "available": "3867.43650012"
+    },
+    "ltc": {
+      "freeze": "0.00",
+      "available": "0.00"
+    }
+  },
+  "info": "success"
+}
+```
+
+<br/>
+
+**委托**
+
+``
+    POST /trade/api/v1/order
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+price | float | true | N/A | 委托价格 | 
+number | float | true | N/A | 委托数量 | 
+type | integer | true | N/A | 交易类型 | 1、买 0、卖
+entrustType | integer | true | N/A | 委托类型 | 0、限价，1、市价
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": {
+    "id": 156292794190713
+  },
+  "info": "An order has been placed successfully"
+}
+```
+
+<br/>
+
+**批量委托**
+
+``
+    POST /trade/api/v1/batchOrder
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+data | string | true | N/A | 订单数据 | 
+
+```
+只支持限价委托，一次事务，要么都成功，要么都失败
+
+data 是一个JSON数组，数组长度只大支持100个，超出100的会被忽略100个以外的元素，数组元素格式为：
+
+{
+  "price": 1000,
+  "amount": 1,
+  "type" : 1    // 1、买 0、卖
+}
+
+组装完成之后，把JSON数组转为STRING，再进行Base64.encode()才是最终要提交的数据
+
+请注意，data参与签名的不是JSON数据本身，而是Base64.decode()之后的STRING
+```
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    {
+      "amount": 0.0010,
+      "price": 5000.0000,
+      "id": 156292972664756,
+      "type": 1
+    },
+    {
+      "amount": 0.0020,
+      "price": 5000.0000,
+      "id": 156292972664757,
+      "type": 1
+    }
+  ],
+  "info": "An order has been placed successfully"
+}
+```
+
+<br/>
+
+**撤单**
+
+``
+    POST /trade/api/v1/cancel
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+id | integer | true | N/A | 订单ID |
+
+>响应数据
+```js
+{
+  "code": 200,
+  "info": "The order has been canceled successfully"
+}
+```
+
+<br/>
+
+**批量撤单**
+
+``
+    POST /trade/api/v1/batchCancel
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+data | string | true | N/A | 订单数据 | 
+
+```
+只支持限价委托，一次事务，要么都成功，要么都失败
+
+data 是一个JSON数组，数组长度只大支持100个，超出100的会被忽略100个以外的元素，数组元素格式为订单ID，如：
+
+[123, 456, 789]
+
+组装完成之后，把JSON数组转为STRING，再进行Base64.encode()才是最终要提交的数据
+
+请注意，data参与签名的不是JSON数据本身，而是Base64.decode()之后的STRING
+```
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    {
+      "msg": "The order has been canceled successfully",
+      "code": 120,
+      "id": 156293034776986
+    },
+    {
+      "msg": "The order has been canceled successfully",
+      "code": 120,
+      "id": 156293034776987
+    },
+    {
+      "msg": "Failed to cancel the order since it does not exist or has been canceled",
+      "code": 121,
+      "id": 156293034776988
+    }
+  ],
+  "info": "The order has been canceled successfully"
+}
+```
+
+<br/>
+
+**订单信息**
+
+``
+    POST /trade/api/v1/getOrder
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+id | integer | true | N/A | 订单ID |
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": {
+    "number": "0.002000",           // 委托数量
+    "price": "5000.00",             // 委托价格
+    "avgPrice": "0.00",             // 成交均价
+    "id": 156293034776987,          // 订单ID
+    "time": 1562930348000,          // 委托时间
+    "type": 1,                      // 交易类型
+    "status": 3,                    // 状态  (0、提交未撮合，1、未成交或部份成交，2、已完成，3、已取消，4、撮合完成结算中)
+    "completeNumber": "0.000000"    //完成数量
+  },
+  "info": "success"
+}
+```
+
+<br/>
+
+**获取未完成订单**
+
+``
+    POST /trade/api/v1/getOpenOrders
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+none | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+pageSize | integer | false | 10 | 订单数量，只返回第一页 | [10-100]
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    {
+      "number": "0.002000",
+      "price": "5000.00",
+      "avgPrice": "0.00",
+      "id": 156293034074105,
+      "time": 1562930340271,
+      "type": 1,
+      "status": 1,
+      "completeNumber": "0.000000"
+    },
+    {
+      "number": "0.001000",
+      "price": "5000.00",
+      "avgPrice": "0.00",
+      "id": 156293034074104,
+      "time": 1562930340271,
+      "type": 1,
+      "status": 1,
+      "completeNumber": "0.000000"
+    }
+  ],
+  "info": "成功"
+}
 ```
