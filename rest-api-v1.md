@@ -41,13 +41,13 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 规范要计算签名的请求 因为使用 HMAC 进行签名计算时，使用不同内容计算得到的结果会完全不同。所以在进行签名计算前，请先对请求进行规范化处理。下面以查询某订单详情请求为例进行说明：
 
 
-`https://api.bision.com/trade/api/v1/getOrder?accesskey={AccessKey}&market={Market}&none={Timestamp}&id={OrderId}&signature={Signature}`
+`https://api.bision.com/trade/api/v1/getOrder?accesskey={AccessKey}&market={Market}&nonce={Timestamp}&id={OrderId}&signature={Signature}`
 
 按照ASCII码的顺序对参数名进行排序,将各参数使用字符 “&” 连接，例如下面就是排序之后结果：
 
 `accesskey=myAccessKey&id=123&market=btc_usdt&nonce=1562919832183`
 
-需要注意的是none的值为13位毫秒数时间戳
+需要注意的是nonce的值为13位毫秒数时间戳
 
 使用网站申请得到的Secret Key对上面生成的参数串进行 HmacSHA256 签名。例如上述参数进行签名的结果：
 
@@ -291,7 +291,7 @@ market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 
 >响应数据
 ```js
@@ -332,7 +332,7 @@ none | integer | true | N/A | 13位毫秒数 |
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 price | float | true | N/A | 委托价格 | 
 number | float | true | N/A | 委托数量 | 
@@ -363,7 +363,7 @@ entrustType | integer | true | N/A | 委托类型 | 0、限价，1、市价
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 data | string | true | N/A | 订单数据 | 
 
@@ -418,7 +418,7 @@ data 是一个JSON数组，数组长度只大支持100个，超出100的会被�
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 id | integer | true | N/A | 订单ID |
 
@@ -443,7 +443,7 @@ id | integer | true | N/A | 订单ID |
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 data | string | true | N/A | 订单数据 | 
 
@@ -495,7 +495,7 @@ data 是一个JSON数组，数组长度只大支持100个，超出100的会被�
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 id | integer | true | N/A | 订单ID |
 
@@ -530,9 +530,66 @@ id | integer | true | N/A | 订单ID |
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 accesskey | string | true | N/A | 访问密钥 | 
-none | integer | true | N/A | 13位毫秒数 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 pageSize | integer | false | 10 | 订单数量，只返回第一页 | [10-100]
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    {
+      "number": "0.002000",
+      "price": "5000.00",
+      "avgPrice": "0.00",
+      "id": 156293034074105,
+      "time": 1562930340271,
+      "type": 1,
+      "status": 1,
+      "completeNumber": "0.000000"
+    },
+    {
+      "number": "0.001000",
+      "price": "5000.00",
+      "avgPrice": "0.00",
+      "id": 156293034074104,
+      "time": 1562930340271,
+      "type": 1,
+      "status": 1,
+      "completeNumber": "0.000000"
+    }
+  ],
+  "info": "成功"
+}
+```
+
+<br/>
+
+**获取多个订单信息**
+
+``
+    GET /trade/api/v1/getBatchOrders
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
+data | string | true | N/A | 订单数据 | 
+
+```
+data 是一个JSON数组，数组长度只大支持100个，超出100的会被忽略100个以外的元素，数组元素格式为订单ID，如：
+
+[123, 456, 789]
+
+组装完成之后，把JSON数组转为STRING，再进行Base64.encode()才是最终要提交的数据
+
+请注意，data参与签名的不是JSON数据本身，而是Base64.decode()之后的STRING
+```
 
 >响应数据
 ```js
