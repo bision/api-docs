@@ -49,7 +49,7 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 
 需要注意的是none的值为13位毫秒数时间戳
 
-使用网站申请得到的SecretKey对上面生成的参数串进行 HmacSHA256 签名。例如上述参数进行签名的结果：
+使用网站申请得到的Secret Key对上面生成的参数串进行 HmacSHA256 签名。例如上述参数进行签名的结果：
 
 `97b7b71741ca0aec6e0404a5b1c7cb2a78e7bd6c2a8088dbd84a20129dee4fe7`
 
@@ -66,6 +66,39 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 
 
 ### 行情数据
+
+**交易市场配置**
+
+``
+    GET /data/api/v1/getMarketConfig
+``
+
+>请求参数
+
+`None`
+
+>响应数据
+```js
+{
+  "ltc_usdt": {
+    "minAmount": 0.00010,
+    "pricePoint": 2,
+    "coinPoint": 4
+  }
+  "eth_usdt": {
+    "minAmount": 0.00010,
+    "pricePoint": 2,
+    "coinPoint": 4
+  },
+  "btc_usdt": {
+    "minAmount": 0.0000010,
+    "pricePoint": 2,
+    "coinPoint": 6
+  }
+}
+```
+
+<br/>
 
 **K线数据**
 
@@ -130,7 +163,7 @@ market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 
 <br/>
 
-**所有交易对的最新 Tickers**
+**所有市场的最新 Ticker**
 
 ``
     GET /data/api/v1/getTickers
@@ -138,7 +171,7 @@ market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 
 >请求参数
 
->None
+`None`
 
 >响应数据
 ```js
@@ -415,8 +448,6 @@ market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 data | string | true | N/A | 订单数据 | 
 
 ```
-只支持限价委托，一次事务，要么都成功，要么都失败
-
 data 是一个JSON数组，数组长度只大支持100个，超出100的会被忽略100个以外的元素，数组元素格式为订单ID，如：
 
 [123, 456, 789]
@@ -456,7 +487,7 @@ data 是一个JSON数组，数组长度只大支持100个，超出100的会被�
 **订单信息**
 
 ``
-    POST /trade/api/v1/getOrder
+    GET /trade/api/v1/getOrder
 ``
 
 >请求参数
@@ -491,7 +522,7 @@ id | integer | true | N/A | 订单ID |
 **获取未完成订单**
 
 ``
-    POST /trade/api/v1/getOpenOrders
+    GET /trade/api/v1/getOpenOrders
 ``
 
 >请求参数
