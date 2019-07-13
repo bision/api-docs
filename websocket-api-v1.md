@@ -30,7 +30,7 @@ WebSocket API 的所有数据进行了 GZIP 压缩并使用二进制方式返回
 
 当Websocket服务器连续两次发送了`ping`消息却没有收到任何一次`pong`消息返回后，服务器将主动断开与此客户端的连接。
 
-当然，用户连接到Bision Websocket服务器后，也可以主动向Bision服务器发送消息`ping`，当服务器接到信息为`ping`字符串后主动返回一个`pong`的字符串.
+当然，用户连接到服务器后，也可以主动向服务器发送消息`ping`，当服务器接到信息为`ping`字符串后主动返回一个`pong`的字符串。
 
 <br/>
 
@@ -42,19 +42,20 @@ WebSocket API 的所有数据进行了 GZIP 压缩并使用二进制方式返回
 
 ### 订阅主题
 
-成功建立与Websocket服务器的连接后，Websocket客户端发送如下请求以订阅特定主题：
+成功建立与Websocket服务器的连接后，Websocket客户端应发送如下请求以订阅特定主题：
 
 ```js
 
-{"channel":"ex_single_market","market":"btc_usdt","event":"addChannel"}
+{"channel":"ex_single_market","market":{Market},"event":"addChannel"}
 
-{"channel":"ex_group_market","group":"usdt","event":"addChannel"}
+{"channel":"ex_group_market","group":{Group},"event":"addChannel"}
 
-{"channel":"ex_last_trade","market":"btc_usdt","since":0,"event":"addChannel"}
+{"channel":"ex_last_trade","market":{Market},"since":{Since},"event":"addChannel"}
 
-{"channel":"ex_depth_data","market":"btc_usdt","event":"addChannel"}
+{"channel":"ex_depth_data","market":{Market},"event":"addChannel"}
 
-{"channel":"ex_chart_update","market":"btc_usdt","since":1562979600,"interval":"15min","event":"addChannel"}
+{"channel":"ex_chart_update","market":{Market},"since":{Since},"interval":{Interval},"event":"addChannel"}
+
 
 ```
 
@@ -70,15 +71,15 @@ WebSocket API 的所有数据进行了 GZIP 压缩并使用二进制方式返回
 取消订阅的格式如下：
 
 ```js
-{"channel":"ex_single_market","market":"btc_usdt","event":"removeChannel"}
+{"channel":"ex_single_market","market":{Market},"event":"removeChannel"}
 
-{"channel":"ex_group_market","group":"usdt","event":"removeChannel"}
+{"channel":"ex_group_market","group":{Group},"event":"removeChannel"}
 
-{"channel":"ex_depth_data","market":"btc_usdt","event":"removeChannel"}
+{"channel":"ex_depth_data","market":{Market},"event":"removeChannel"}
 
-{"channel":"ex_last_trade","market":"btc_usdt","event":"removeChannel"}
+{"channel":"ex_last_trade","market":{Market},"event":"removeChannel"}
 
-{"channel":"ex_chart_update","market":"btc_usdt","interval":"15min","event":"removeChannel"}
+{"channel":"ex_chart_update","market":{Market},"interval":{Interval},"event":"removeChannel"}
 
 ```
 
