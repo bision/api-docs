@@ -18,9 +18,9 @@ WebSocket API 的所有数据进行了 GZIP 压缩并使用二进制方式返回
 ### 心跳消息
 
 
-当用户的Websocket客户端连接到Bision Websocket服务器后，服务器会定期（当前设为5秒）向其发送ping消息并包含一个加密串，
+当用户的Websocket客户端连接到Bision Websocket服务器后，服务器会定期（当前设为5秒）向其发送ping消息并包含一个时间戳，
 
-当用户的Websocket客户端接收到此心跳消息后，应返回pong消息并包含同一加密串，
+当用户的Websocket客户端接收到此心跳消息后，应返回pong消息并包含同一时间戳，
 
 当Websocket服务器连续两次发送了`ping`消息却没有收到任何一次`pong`消息返回后，服务器将主动断开与此客户端的连接。
 
