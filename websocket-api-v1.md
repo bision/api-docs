@@ -119,6 +119,7 @@ since | integer | true | 0 | 时间条件 | 0或需要的时间节点的时间�
         "records":[[1562987700,101.0,101.0,101.0,101.0,4.0,404.0]], 
         "channel":"ex_chart_update",
         "interval":"15min",
+        "isFull":true,
         "since":1562987700
     },
     "info":"success"
@@ -126,7 +127,7 @@ since | integer | true | 0 | 时间条件 | 0或需要的时间节点的时间�
 ```
 
 ``
-    说明：用户订阅成功之后，会返回一次根据since过滤的全量数据，并且在data里会有一个isFull=true的字段做为标识
+    说明：用户订阅成功之后，会返回一次根据since过滤的全量数据，并且在data里有一个isFull=true的字段做为标识，之后, 一旦有更新，Websocket客户端将收到服务器推送的增量消息。
 ``
 
 <br/>
@@ -281,6 +282,6 @@ since | integer | true | 0 | 时间条件 | 0或需要的时间节点的时间�
 }
 ```
 ``
-    说明：用户订阅成功之后，会返回一次根据since过滤的全量数据，并且在data里会有一个isFull=true的字段做为标识。
+    说明：用户订阅成功之后，会返回一次根据since过滤的全量数据，并且在data里有一个isFull=true的字段做为标识，之后, 一旦有更新，Websocket客户端将收到服务器推送的增量消息。
 ``
 
