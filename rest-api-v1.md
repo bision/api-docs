@@ -621,7 +621,7 @@ data 是一个JSON数组，数组长度最大只支持100个，超出100的会�
 }
 ```
 
-**获取充值地址**
+**获取充值地址(In testing)**
 
 ``
     GET /trade/api/v1/getPayInAddress
@@ -649,7 +649,7 @@ pageSize | integer | true | 10 | 每页数量 |
 }
 ```
 
-**获取提现地址**
+**获取提现地址(In testing)**
 
 ``
     GET /trade/api/v1/getPayOutAddress
@@ -677,7 +677,7 @@ pageSize | integer | true | 10 | 每页数量 |
 }
 ```
 
-**获取充值记录**
+**获取充值记录(In testing)**
 
 ``
     GET /trade/api/v1/getPayInRecord
@@ -705,7 +705,7 @@ pageSize | integer | true | 10 | 每页数量 |
 }
 ```
 
-**获取提现记录**
+**获取提现记录(In testing)**
 
 ``
     GET /trade/api/v1/getPayOutRecord
@@ -733,7 +733,7 @@ pageSize | integer | true | 10 | 每页数量 |
 }
 ```
 
-**提现配置**
+**提现配置(In testing)**
 
 ``
     GET /trade/api/v1/getWithdrawConfig
@@ -767,7 +767,7 @@ nonce | integer | true | N/A | 13位毫秒数 |
 }
 ```
 
-**提现**
+**提现(In testing)**
 
 ``
     GET /trade/api/v1/withdraw
