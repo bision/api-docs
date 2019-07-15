@@ -106,7 +106,7 @@ WebSocket API 的所有数据都进行了 GZIP 压缩并使用二进制方式返
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
-interval | string | true | N/A | K线类型 | 1min,5min,15min,30min,1hour,6hour,1day,7day,30day,365day
+interval | string | true | N/A | K线类型 | 1min,5min,15min,30min,1hour,6hour,1day,7day,30day
 since | integer | true | 0 | 时间条件 | 0或需要的时间节点的时间戳，10位秒级
 
 >响应数据

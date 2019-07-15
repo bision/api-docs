@@ -32,7 +32,7 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 
 时间戳（nonce）：您应用程序发出请求的时间戳，13位毫秒数，Bision将根据这个时间戳检验您API请求的有效性。
 
-签名(signature)：签名计算得出的值，用于确保签名有效和未被篡改，Bision使用 HmacSHA256。
+签名(signature)：签名计算得出的值，用于确保签名有效和未被篡改，Bision使用 `HmacSHA256`。
 
 <br/>
 
@@ -49,7 +49,7 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 
 需要注意的是nonce的值为13位毫秒数时间戳
 
-使用网站申请得到的Secret Key对上面生成的参数串进行 HmacSHA256 签名。例如上述参数进行签名的结果：
+使用网站申请得到的Secret Key对上面生成的参数串进行 `HmacSHA256` 签名。例如上述参数进行签名的结果：
 
 `97b7b71741ca0aec6e0404a5b1c7cb2a78e7bd6c2a8088dbd84a20129dee4fe7`
 
@@ -111,7 +111,7 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
-type | string | true | N/A | K线类型 | 1min,5min,15min,30min,1hour,6hour,1day,7day,30day,365day
+type | string | true | N/A | K线类型 | 1min,5min,15min,30min,1hour,6hour,1day,7day,30days
 since | integer | true | 0 | 时间条件，控制增量 | 第一次为0,之后为响应的since的值即可
 
 >响应数据
@@ -617,6 +617,182 @@ data 是一个JSON数组，数组长度最大只支持100个，超出100的会�
       "completeNumber": "0.000000"
     }
   ],
+  "info": "success"
+}
+```
+
+**获取充值地址**
+
+``
+    GET /trade/api/v1/getPayInAddress
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+coin | string | true | N/A | 币种名称 | btc,eth,ltc...
+page | integer | true | 1 | 分页页码 | 
+pageSize | integer | true | 10 | 每页数量 | 
+
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    
+  ],
+  "info": "success"
+}
+```
+
+**获取提现地址**
+
+``
+    GET /trade/api/v1/getPayOutAddress
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+coin | string | true | N/A | 币种名称 | btc,eth,ltc...
+page | integer | true | 1 | 分页页码 | 
+pageSize | integer | true | 10 | 每页数量 | 
+
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    
+  ],
+  "info": "success"
+}
+```
+
+**获取充值记录**
+
+``
+    GET /trade/api/v1/getPayInRecord
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+coin | string | true | N/A | 币种名称 | btc,eth,ltc...
+page | integer | true | 1 | 分页页码 | 
+pageSize | integer | true | 10 | 每页数量 | 
+
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    
+  ],
+  "info": "success"
+}
+```
+
+**获取提现记录**
+
+``
+    GET /trade/api/v1/getPayOutRecord
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+coin | string | true | N/A | 币种名称 | btc,eth,ltc...
+page | integer | true | 1 | 分页页码 | 
+pageSize | integer | true | 10 | 每页数量 | 
+
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": [
+    
+  ],
+  "info": "success"
+}
+```
+
+**提现配置**
+
+``
+    GET /trade/api/v1/getWithdrawConfig
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": {
+      "btc": {
+          "minAmount": 0.01,    // 单次最小提现数量
+          "maxAmount": 10,      // 日提币额度
+          "fee": 0.0005         // 默认手续费
+      },
+      "eth": {
+          "minAmount": 0.1,
+          "maxAmount": 100,
+          "fee": 0.005
+      }
+  },
+  "info": "success"
+}
+```
+
+**提现**
+
+``
+    GET /trade/api/v1/withdraw
+``
+
+>请求参数
+
+参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
+-|-|-|-|-|-
+accesskey | string | true | N/A | 访问密钥 | 
+nonce | integer | true | N/A | 13位毫秒数 | 
+coin | string | true | N/A | 币种名称 | btc,eth,ltc...
+address | string | true | N/A | 提现地址 | 仅支持您在Bision的认证地址
+amount | float | true | N/A | 提现数量 | 不能低于当前币种最低提现额度
+safePwd | string | true | N/A | 安全密码 | 
+memo | string | false | Null | 备注信息 | 
+
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": {
+      
+  },
   "info": "success"
 }
 ```
