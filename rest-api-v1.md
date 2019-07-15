@@ -111,7 +111,7 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 参数 | 数据类型 | 是否必须 | 默认值 | 描述 | 取值范围  
 -|-|-|-|-|-
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
-type | string | true | N/A | K线类型 | 1min,5min,15min,30min,1hour,6hour,1day,7day,30days
+type | string | true | N/A | K线类型 | 1min,5min,15min,30min,1hour,6hour,1day,7day,30day
 since | integer | true | 0 | 时间条件，控制增量 | 第一次为0,之后为响应的since的值即可
 
 >响应数据
