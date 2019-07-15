@@ -64,7 +64,6 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 
 <br/>
 
-
 ### 行情数据
 
 **交易市场配置**
@@ -279,6 +278,28 @@ market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
 <br/>
 
 ### 交易 API
+
+**获取服务器时间(不需要签名)**
+
+``
+    GET /trade/api/v1/getServerTime
+``
+
+>请求参数
+
+`None`
+
+>响应数据
+```js
+{
+  "code": 200,
+  "data": {
+      "serverTime": 1562924059006
+  },
+  "info": "success"
+}
+```
+<br/>
 
 **获取账户资产**
 
