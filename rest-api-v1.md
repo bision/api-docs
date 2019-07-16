@@ -80,19 +80,25 @@ API 访问密钥（accesskey）：您申请的 API Key 中的 Access Key。
 ```js
 {
   "ltc_usdt": {
-    "minAmount": 0.00010,
-    "pricePoint": 2,
-    "coinPoint": 4
+    "minAmount": 0.00010,       // 最小下单数量
+    "pricePoint": 2,            // 价格小数点
+    "coinPoint": 4,             // 数量小数点
+    "maker": 0.00100000,        // 主动单交易手续费
+    "taker": 0.00100000         // 被动单交易手续费
   }
   "eth_usdt": {
     "minAmount": 0.00010,
     "pricePoint": 2,
-    "coinPoint": 4
+    "coinPoint": 4,
+    "maker": 0.00100000,
+    "taker": 0.00100000
   },
   "btc_usdt": {
     "minAmount": 0.0000010,
     "pricePoint": 2,
-    "coinPoint": 6
+    "coinPoint": 6,
+    "maker": 0.00100000,
+    "taker": 0.00100000
   }
 }
 ```
