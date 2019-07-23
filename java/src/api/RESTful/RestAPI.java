@@ -64,7 +64,6 @@ public class RestAPI {
 	// 获取账户资产
 	@Test
 	public void getBalance() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -79,7 +78,6 @@ public class RestAPI {
 	// 委托
 	@Test
 	public void order() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -99,7 +97,6 @@ public class RestAPI {
 	// 批量委托
 	@Test
 	public void batchOrder() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -134,7 +131,6 @@ public class RestAPI {
 	// 撤单
 	@Test
 	public void cancel() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -151,7 +147,6 @@ public class RestAPI {
 	// 批量撤单
 	@Test
 	public void batchCancel() {
-
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -180,7 +175,6 @@ public class RestAPI {
 	// 获取订单
 	@Test
 	public void getOrder() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -197,7 +191,6 @@ public class RestAPI {
 	// 获取未完成的订单
 	@Test
 	public void getOpenOrders() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
@@ -216,7 +209,6 @@ public class RestAPI {
 	// 批量获取订单
 	@Test
 	public void getBatchOrders() {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accesskey", accessKey);
 		map.put("nonce", System.currentTimeMillis());
