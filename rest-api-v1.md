@@ -728,7 +728,7 @@ pageSize | integer | true | 10 | 每页数量 |
 			"chainName": "ERC-20",      //主链名称
 			"chain": "eth",             //主链币种
 			"address": "0x8390b456fe03139ba402f45be9110a5fadf7e862", //提现地址
-			"memo": "",                 //memo
+			"memo": "",                 
 			"coin": "usdt"              //当前币种
 		}, {
 			"chainName": "omni",
