@@ -536,9 +536,12 @@ id | integer | true | N/A | 订单ID |
     "avgPrice": "0.00",             // 成交均价
     "id": 156293034776987,          // 订单ID
     "time": 1562930348000,          // 委托时间
-    "type": 1,                      // 交易类型
+    "type": 1,                      // 交易类型：1、买 0、卖
     "status": 3,                    // 状态  (0、提交未撮合，1、未成交或部份成交，2、已完成，3、已取消，4、撮合完成结算中)
-    "completeNumber": "0.000000"    //完成数量
+    "completeNumber": "0.000000",   // 完成数量
+    "completeMoney": "0.000000",    // 完成金额
+    "entrustType": 0,               // 订单类型：1、市价 0、限价
+    "fee": "0.000000"               // 交易手续费
   },
   "info": "success"
 }
@@ -559,7 +562,8 @@ id | integer | true | N/A | 订单ID |
 accesskey | string | true | N/A | 访问密钥 | 
 nonce | integer | true | N/A | 13位毫秒数 | 
 market | string | true | N/A | 交易市场 | btc_usdt, eth_usdt...
-pageSize | integer | false | 10 | 订单数量，只返回第一页 | [10-100]
+page | integer | false | 1 | 页码 | 
+pageSize | integer | false | 10 | 订单数量 | [10-1000]
 
 >响应数据
 ```js
@@ -574,7 +578,10 @@ pageSize | integer | false | 10 | 订单数量，只返回第一页 | [10-100]
       "time": 1562930340271,
       "type": 1,
       "status": 1,
-      "completeNumber": "0.000000"
+      "completeNumber": "0.000000",
+      "completeMoney": "0.000000",
+      "entrustType": 0,              
+      "fee": "0.000000"
     },
     {
       "number": "0.001000",
@@ -584,7 +591,10 @@ pageSize | integer | false | 10 | 订单数量，只返回第一页 | [10-100]
       "time": 1562930340271,
       "type": 1,
       "status": 1,
-      "completeNumber": "0.000000"
+      "completeNumber": "0.000000",
+      "completeMoney": "0.000000",
+      "entrustType": 0,              
+      "fee": "0.000000"
     }
   ],
   "info": "success"
@@ -631,7 +641,10 @@ data 是一个JSON数组，数组长度最大只支持100个，超出100的会�
       "time": 1562930340271,
       "type": 1,
       "status": 1,
-      "completeNumber": "0.000000"
+      "completeNumber": "0.000000",
+      "completeMoney": "0.000000",
+      "entrustType": 0,              
+      "fee": "0.000000"
     },
     {
       "number": "0.001000",
@@ -641,14 +654,17 @@ data 是一个JSON数组，数组长度最大只支持100个，超出100的会�
       "time": 1562930340271,
       "type": 1,
       "status": 1,
-      "completeNumber": "0.000000"
+      "completeNumber": "0.000000",
+      "completeMoney": "0.000000",
+      "entrustType": 0,              
+      "fee": "0.000000"
     }
   ],
   "info": "success"
 }
 ```
 
-**获取充值地址(In testing)**
+**获取充值地址**
 
 ``
     GET /trade/api/v1/getPayInAddress
@@ -661,22 +677,32 @@ data 是一个JSON数组，数组长度最大只支持100个，超出100的会�
 accesskey | string | true | N/A | 访问密钥 | 
 nonce | integer | true | N/A | 13位毫秒数 | 
 coin | string | true | N/A | 币种名称 | btc,eth,ltc...
-page | integer | true | 1 | 分页页码 | 
-pageSize | integer | true | 10 | 每页数量 | 
-
 
 >响应数据
 ```js
 {
-  "code": 200,
-  "data": [
-    
-  ],
-  "info": "success"
+	"code": 200,
+	"data": {
+		"record": [{
+			"chainName": "omni",    //链类型
+			"chain": "btc",         //主链币种
+			"address": "1EAEoYaXx93tKgvrfgpna19GPqC4J2Xcp7",  //充值地址
+			"coin": "USDT",         //当前币种
+			"memo": ""
+		}, 
+		{
+			"chainName": "usdt-erc20",
+			"chain": "eth",
+			"address": "0x8390b456fe03139ba402f45be9110a5fadf7e862",
+			"coin": "USDT",
+			"memo": ""
+		}]
+	},
+	"info": "成功"
 }
 ```
 
-**获取提现地址(In testing)**
+**获取提现地址**
 
 ``
     GET /trade/api/v1/getPayOutAddress
@@ -696,15 +722,27 @@ pageSize | integer | true | 10 | 每页数量 |
 >响应数据
 ```js
 {
-  "code": 200,
-  "data": [
-    
-  ],
-  "info": "success"
+	"code": 200,
+	"data": {
+		"record": [{
+			"chainName": "ERC-20",      //主链名称
+			"chain": "eth",             //主链币种
+			"address": "0x8390b456fe03139ba402f45be9110a5fadf7e862", //提现地址
+			"memo": "",                 //memo
+			"coin": "usdt"              //当前币种
+		}, {
+			"chainName": "omni",
+			"chain": "btc",
+			"address": "1EAEoYaXx93tKgvrfgpna19GPqC4J2Xcp7",
+			"memo": "",
+			"coin": "usdt"
+		}]
+	},
+	"info": "成功"
 }
 ```
 
-**获取充值记录(In testing)**
+**获取充值记录**
 
 ``
     GET /trade/api/v1/getPayInRecord
@@ -724,15 +762,29 @@ pageSize | integer | true | 10 | 每页数量 |
 >响应数据
 ```js
 {
-  "code": 200,
-  "data": [
-    
-  ],
-  "info": "success"
-}
+ 	"code": 200,
+ 	"data": {
+ 		"total": 1,
+ 		"pageIndex": 1,
+ 		"record": [{
+ 			"chainName": "ERC-20",      //主链名称
+ 			"amount": 0.001000000,      //币种数量
+ 			"chain": "eth",             //主链币种
+ 			"address": "0x145e96ff8388e474df8c799fb433f103f42d9462",
+ 			"depth": 12,                //确认数
+ 			"creatTime": 1563465915000,
+ 			"manageTime": 1563466260000,
+ 			"txHash": "0x4bcd1207e57dc96737d20198c8792c3340386e7f247571458d17671b7834ddd6", //交易哈希
+ 			"status": "success",        //状态
+ 			"coin": "usdt"              //当前币种
+ 		}],
+ 		"pageSize": 100
+ 	},
+ 	"info": "成功"
+ }
 ```
 
-**获取提现记录(In testing)**
+**获取提现记录**
 
 ``
     GET /trade/api/v1/getPayOutRecord
@@ -752,15 +804,25 @@ pageSize | integer | true | 10 | 每页数量 |
 >响应数据
 ```js
 {
-  "code": 200,
-  "data": [
-    
-  ],
-  "info": "success"
+	"code": 200,
+	"data": {
+		"record": [{
+			"chainName": "ERC-20",      //主链名称
+			"amount": 0.002000000,      //币种数量
+			"chain": "eth",             //主链币种
+			"address": "0x8390b456fe03139ba402f45be9110a5fadf7e862",    //提现地址
+			"creatTime": 1563513678000, //提币时间
+			"fee": 0.001000000,         //手续费
+			"manageTime": 1563513698000,//处理时间
+			"status": 4,
+			"coin": "usdt"
+		}]
+	},
+	"info": "成功"
 }
 ```
 
-**提现配置(In testing)**
+**提现配置**
 
 ``
     GET /trade/api/v1/getWithdrawConfig
