@@ -90,7 +90,7 @@ public class RestAPI {
 		String signature = HttpUtil.getSignature(map, secretKey);
 		map.put("signature", signature);
 		// 
-		String text = HttpUtil.get(URL + "/trade/api/v1/order", map);
+		String text = HttpUtil.post(URL + "/trade/api/v1/order", map);
 		System.out.println(text);
 	}
 	
@@ -124,7 +124,7 @@ public class RestAPI {
 		String signature = HttpUtil.getSignature(map, secretKey);
 		map.put("signature", signature);
 		// 
-		String text = HttpUtil.get(URL + "/trade/api/v1/batchOrder", map);
+		String text = HttpUtil.post(URL + "/trade/api/v1/batchOrder", map);
 		System.out.println(text);
 	}
 	
@@ -140,7 +140,7 @@ public class RestAPI {
 		String signature = HttpUtil.getSignature(map, secretKey);
 		map.put("signature", signature);
 		
-		String text = HttpUtil.get(URL + "/trade/api/v1/cancel", map);
+		String text = HttpUtil.post(URL + "/trade/api/v1/cancel", map);
 		System.out.println(text);
 	}
 	
@@ -168,7 +168,7 @@ public class RestAPI {
 		String signature = HttpUtil.getSignature(map, secretKey);
 		map.put("signature", signature);
 		// 
-		String text = HttpUtil.get(URL + "/trade/api/v1/batchCancel", map);
+		String text = HttpUtil.post(URL + "/trade/api/v1/batchCancel", map);
 		System.out.println(text);
 	}
 	
