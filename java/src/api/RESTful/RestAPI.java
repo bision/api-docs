@@ -61,7 +61,7 @@ public class RestAPI {
 		System.out.println(text);
 	}
 	
-	// 获取账户资产
+	// 获取交易账户资产
 	@Test
 	public void getBalance() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -72,6 +72,46 @@ public class RestAPI {
 		map.put("signature", signature);
 		
 		String text = HttpUtil.get(URL + "/trade/api/v1/getBalance", map);
+		System.out.println(text);
+	}
+	
+	
+	// 获取账户类型
+	@Test
+	public void getAccounts() {
+		String text = HttpUtil.get(URL + "/trade/api/v1/getAccounts");
+		System.out.println(text);
+	}
+	
+	// 获取指定账户资金
+	@Test
+	public void getFunds() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accesskey", accessKey);
+		map.put("account", 1);	// 钱包账户
+		map.put("nonce", System.currentTimeMillis());
+		// 签名
+		String signature = HttpUtil.getSignature(map, secretKey);
+		map.put("signature", signature);
+		String text = HttpUtil.get(URL + "/trade/api/v1/getFunds", map);
+		System.out.println(text);
+	}
+	
+	// 划账
+	@Test
+	public void transfer() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accesskey", accessKey);
+		map.put("from", 1);
+		map.put("to", 2);
+		map.put("amount", 0.1);
+		map.put("coin", "btc");
+		map.put("safePwd", "123456");
+		map.put("nonce", System.currentTimeMillis());
+		// 签名
+		String signature = HttpUtil.getSignature(map, secretKey);
+		map.put("signature", signature);
+		String text = HttpUtil.post(URL + "/trade/api/v1/transfer", map);
 		System.out.println(text);
 	}
 	
@@ -233,5 +273,87 @@ public class RestAPI {
 		System.out.println(text);
 	}
 	
+	// 获取充值记录
+    @Test
+    public void getPayInRecord() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("accesskey", accessKey);
+        map.put("nonce", System.currentTimeMillis());
+        map.put("coin", "eth");
+        map.put("page", 1);
+        map.put("pageSize", 10);
+
+        // 签名
+        String signature = HttpUtil.getSignature(map, secretKey);
+        map.put("signature", signature);
+
+        String text = HttpUtil.get(URL + "/trade/api/v1/getPayInRecord", map);
+        System.out.println(text);
+    }
+
+    // 获取提现记录
+    @Test
+    public void getPayOutRecord() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("accesskey", accessKey);
+        map.put("nonce", System.currentTimeMillis());
+        map.put("coin", "eth");
+        map.put("page", 1);
+        map.put("pageSize", 10);
+        // 签名
+        String signature = HttpUtil.getSignature(map, secretKey);
+        map.put("signature", signature);
+
+        String text = HttpUtil.get(URL + "/trade/api/v1/getPayOutRecord", map);
+        System.out.println(text);
+    }
+
+    // 获取充值地址
+	@Test
+	public void getPayInAddress() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accesskey", accessKey);
+		map.put("nonce", System.currentTimeMillis());
+		map.put("coin", "eth");
+		// 签名
+		String signature = HttpUtil.getSignature(map, secretKey);
+		map.put("signature", signature);
+
+		String text = HttpUtil.get(URL + "/trade/api/v1/getPayInAddress", map);
+		System.out.println(text);
+	}
+
+	// 获取提现地址
+	@Test
+	public void getPayOutAddress() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accesskey", accessKey);
+		map.put("nonce", System.currentTimeMillis());
+		map.put("coin", "eth");
+		// 签名
+		String signature = HttpUtil.getSignature(map, secretKey);
+		map.put("signature", signature);
+		String text = HttpUtil.get(URL + "/trade/api/v1/getPayOutAddress", map);
+		System.out.println(text);
+	}
+
+	// 提现
+	@Test
+	public void withdraw() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accesskey", accessKey);
+		map.put("nonce", System.currentTimeMillis());
+		map.put("coin", "eth");
+		map.put("safePwd", "");
+		map.put("amount", "1");
+		map.put("address", "");
+		// 签名
+		String signature = HttpUtil.getSignature(map, secretKey);
+		map.put("signature", signature);
+		String text = HttpUtil.get(URL + "/trade/api/v1/withdraw", map);
+		System.out.println(text);
+	}
+	
 	// To be continued...
+	
 }
